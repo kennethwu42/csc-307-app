@@ -1,9 +1,12 @@
 import express from "express";
+import cors from "cors";
+
 
 const app = express();
 const port = 8000;
 
 app.use(express.json());
+app.use(cors());
 
 app.listen(port, () => {
   console.log(
@@ -40,6 +43,12 @@ const users = {
       },
     ]
   };
+
+const findUserByName = (name) => {
+    return users["users_list"].filter(
+        (user) => user["name"] === name
+    );
+};
 
 const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
@@ -114,9 +123,18 @@ const addUser = (user) => {
   return user;
 };
 
+app.get("/users", (req, res) => {
+    res.send(users);
+});
+
 //add user
 app.post("/users", (req, res) => {
-  const userToAdd = req.body;
-  addUser(userToAdd);
-  res.send();
+    const userToAdd = req.body;
+    // Generate a random ID for the user
+    const randomId = generateRandomId();
+
+    // Assign the generated ID to the user object
+    userToAdd.id = randomId;
+    addUser(userToAdd);
+    res.status(201).json(userToAdd);
 });

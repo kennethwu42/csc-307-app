@@ -1,4 +1,4 @@
-// src/MyApp.jsx
+ // src/MyApp.jsx
 import React, {useState, useEffect} from 'react';
 import Table from "./Table";
 import Form from "./Form";
@@ -15,7 +15,7 @@ function MyApp() {
   function removeOneCharacter(index){
     const character_id = characters[index].id;
     deleteUser(character_id);
-    const updated_list = characters.filter((characters, i) => {
+    const updated_list = characters.filter((characters, i) => { 
       return i !== index;
     });
     setCharacters(updated_list);
@@ -67,6 +67,9 @@ function MyApp() {
   
 }
 export default MyApp;
+<<<<<<< HEAD
+=======
 
 
 export default MyApp;
+>>>>>>> 01ef4c583a2ecb915a2dbc1dbc73de8a2f14e376

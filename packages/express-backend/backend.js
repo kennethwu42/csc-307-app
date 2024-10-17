@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 
-
 const app = express();
 const port = 8000;
 
@@ -83,7 +82,6 @@ app.get("/users", (req, res) => {
   }
 });
 
-
 //get specific user by id
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
@@ -117,6 +115,25 @@ app.delete("/users/:id", (req, res) => {
   }
 });
 
+// Function to generate a random ID with 3 characters and 3 numbers
+function generateRandomId() {
+    const chars = 'abcdefghijklmnopqrstuvwxyz';
+    const nums = '0123456789';
+
+    let randomId = '';
+
+    // Generate 3 random characters
+    for (let i = 0; i < 3; i++) {
+        randomId += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    // Generate 3 random numbers
+    for (let i = 0; i < 3; i++) {
+        randomId += nums.charAt(Math.floor(Math.random() * nums.length));
+    }
+
+    return randomId;
+}
 
 const addUser = (user) => {
   users["users_list"].push(user);

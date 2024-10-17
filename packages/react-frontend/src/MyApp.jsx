@@ -4,35 +4,13 @@ import Table from "./Table";
 import Form from "./Form";
 
 function MyApp() {
-
-  // state is like a shopping cart. You can add or remove items from it
   const [characters, setCharacters] = useState([]);
 
-  useEffect(() => {
-    fetchUsers()
-      .then((res) => res.json())
-      .then((json) => setCharacters(json["users_list"]))
-      .catch((error) => { console.log(error); });
-  }, [] );
-
-  return (
-    <div className="container">
-      <Table 
-        characterData={characters} 
-        removeCharacter={removeOneCharacter}
-      />
-      <Form handleSubmit={updateList} />
-    </div>
-  );
-
-  function updateList(person){ 
-    postUser(person)
-      .then((res) => res.status == 201 ? res.json() : undefined)
-      .then((new_character) => setCharacters([...characters, new_character]))
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+  function deleteUser(id){
+    fetch(`http://localhost:8000/users/${id}`, {
+      method: "DELETE",
+    })
+  }  
 
   function removeOneCharacter(index){
     const character_id = characters[index].id;
@@ -48,6 +26,13 @@ function MyApp() {
     return promise;
   } 
 
+  useEffect(() => {
+    fetchUsers()
+      .then((res) => res.json())
+      .then((json) => setCharacters(json["users_list"]))
+      .catch((error) => {console.log(error);});
+  }, []);
+
   function postUser(person) {
     const promise = fetch("http://localhost:8000/users", {
       method: "POST",
@@ -59,13 +44,29 @@ function MyApp() {
 
     return promise;
   }
-  function deleteUser(id){
-    fetch(`http://localhost:8000/users/${id}`, {
-      method: "DELETE",
-    })
-  }
+
+  function updateList(person){ 
+    postUser(person)
+      .then((res) => res.status == 201 ? res.json() : undefined)
+      .then((new_character) => setCharacters([...characters, new_character]))
+      .catch((error) => {
+        console.log(error);
+      })
+  } 
+
+
+  return (
+    <div className="container">
+      <Table 
+        characterData={characters} 
+        removeCharacter={removeOneCharacter}
+      />
+      <Form handleSubmit={updateList} />
+    </div>
+  ); 
   
 }
+export default MyApp;
 
 
 export default MyApp;

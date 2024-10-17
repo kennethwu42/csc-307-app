@@ -15,7 +15,7 @@ function MyApp() {
   function removeOneCharacter(index){
     const character_id = characters[index].id;
     deleteUser(character_id);
-    const updated_list = characters.filter((characters, i) => {
+    const updated_list = characters.filter((characters, i) => { 
       return i !== index;
     });
     setCharacters(updated_list);
@@ -66,7 +66,4 @@ function MyApp() {
   ); 
   
 }
-export default MyApp;
-
-
 export default MyApp;
